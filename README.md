@@ -134,7 +134,7 @@ Run without --dry-run to organize files.
 
 ## Customization
 
-You can customize the file categories by modifying the `FILE_CATEGORIES` dictionary in `desk_organizer.py` or by editing the `config.json` file (for future versions).
+You can customize the file categories by modifying the `FILE_CATEGORIES` dictionary in `desk_organizer.py`.
 
 ## Safety Features
 

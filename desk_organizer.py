@@ -96,7 +96,7 @@ def organize_desktop(desktop_path, dry_run=False):
         destination = category_folder / item.name
         
         # Handle file name conflicts
-        if destination.exists():
+        if not dry_run and destination.exists():
             base_name = item.stem
             extension = item.suffix
             counter = 1
@@ -159,7 +159,7 @@ Examples:
     )
     
     # Default desktop path
-    default_desktop = os.path.join(Path.home(), 'Desktop')
+    default_desktop = str(Path.home() / 'Desktop')
     
     parser.add_argument(
         '--path',

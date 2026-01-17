@@ -42,6 +42,33 @@ def get_file_category(file_extension):
     return 'Others'
 
 
+def resolve_file_conflict(destination, item):
+    """
+    Resolve file name conflicts by appending a counter to the filename.
+    
+    Args:
+        destination (Path): The initial destination path
+        item (Path): The source file item
+    
+    Returns:
+        Path: The resolved destination path (original or with counter appended)
+    """
+    if not destination.exists():
+        return destination
+    
+    base_name = item.stem
+    extension = item.suffix
+    counter = 1
+    category_folder = destination.parent
+    
+    while destination.exists():
+        new_name = f"{base_name}_{counter}{extension}"
+        destination = category_folder / new_name
+        counter += 1
+    
+    return destination
+
+
 def organize_desktop(desktop_path, dry_run=False):
     """
     Organize files in the desktop directory into categorized folders.
@@ -96,37 +123,19 @@ def organize_desktop(desktop_path, dry_run=False):
         destination = category_folder / item.name
         
         # Handle file name conflicts (check even in dry-run to show accurate preview)
-        if dry_run:
-            # In dry-run, check if destination would exist (category folders may not exist yet)
-            # Check actual filesystem for existing files
-            if category_folder.exists():
-                temp_dest = destination
-                if temp_dest.exists():
-                    base_name = item.stem
-                    extension = item.suffix
-                    counter = 1
-                    while temp_dest.exists():
-                        new_name = f"{base_name}_{counter}{extension}"
-                        temp_dest = category_folder / new_name
-                        counter += 1
-                    destination = temp_dest
-        else:
-            # In actual execution, check and resolve conflicts
-            if destination.exists():
-                base_name = item.stem
-                extension = item.suffix
-                counter = 1
-                while destination.exists():
-                    new_name = f"{base_name}_{counter}{extension}"
-                    destination = category_folder / new_name
-                    counter += 1
+        if dry_run and category_folder.exists():
+            # In dry-run, only check for conflicts if category folder already exists
+            destination = resolve_file_conflict(destination, item)
+        elif not dry_run:
+            # In actual execution, always check and resolve conflicts
+            destination = resolve_file_conflict(destination, item)
         
         # Move the file
         try:
             if dry_run:
                 print(f"  [DRY RUN] Would move: {item.name} -> {category}/{destination.name}")
             else:
-                shutil.move(str(item), str(destination))
+                shutil.move(item, destination)
                 print(f"  Moved: {item.name} -> {category}/{destination.name}")
             stats['files_organized'] += 1
             stats[category] += 1

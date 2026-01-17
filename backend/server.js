@@ -53,10 +53,15 @@ app.post('/api/items', (req, res) => {
       return res.status(400).json({ error: 'Name and category are required' });
     }
 
+    const parsedQuantity = parseInt(quantity) || 1;
+    if (parsedQuantity < 1) {
+      return res.status(400).json({ error: 'Quantity must be a positive number' });
+    }
+
     const stmt = db.prepare(
       'INSERT INTO items (name, category, location, quantity, notes) VALUES (?, ?, ?, ?, ?)'
     );
-    const result = stmt.run(name, category, location || '', quantity || 1, notes || '');
+    const result = stmt.run(name, category, location || '', parsedQuantity, notes || '');
     
     const newItem = db.prepare('SELECT * FROM items WHERE id = ?').get(result.lastInsertRowid);
     res.status(201).json(newItem);
@@ -73,10 +78,15 @@ app.put('/api/items/:id', (req, res) => {
       return res.status(400).json({ error: 'Name and category are required' });
     }
 
+    const parsedQuantity = parseInt(quantity) || 1;
+    if (parsedQuantity < 1) {
+      return res.status(400).json({ error: 'Quantity must be a positive number' });
+    }
+
     const stmt = db.prepare(
       'UPDATE items SET name = ?, category = ?, location = ?, quantity = ?, notes = ? WHERE id = ?'
     );
-    const result = stmt.run(name, category, location || '', quantity || 1, notes || '', req.params.id);
+    const result = stmt.run(name, category, location || '', parsedQuantity, notes || '', req.params.id);
     
     if (result.changes === 0) {
       return res.status(404).json({ error: 'Item not found' });

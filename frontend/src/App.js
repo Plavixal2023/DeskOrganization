@@ -22,6 +22,9 @@ function App() {
   const fetchItems = async () => {
     try {
       const response = await fetch(`${API_URL}/items`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch items');
+      }
       const data = await response.json();
       setItems(data);
     } catch (error) {
@@ -33,18 +36,20 @@ function App() {
     e.preventDefault();
     
     try {
-      if (editingId) {
-        await fetch(`${API_URL}/items/${editingId}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
-        });
-      } else {
-        await fetch(`${API_URL}/items`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
-        });
+      const response = editingId
+        ? await fetch(`${API_URL}/items/${editingId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+          })
+        : await fetch(`${API_URL}/items`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+          });
+      
+      if (!response.ok) {
+        throw new Error('Failed to save item');
       }
       
       setFormData({ name: '', category: '', location: '', quantity: 1, notes: '' });
@@ -52,6 +57,7 @@ function App() {
       fetchItems();
     } catch (error) {
       console.error('Error saving item:', error);
+      alert('Failed to save item. Please try again.');
     }
   };
 
@@ -69,10 +75,14 @@ function App() {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this item?')) {
       try {
-        await fetch(`${API_URL}/items/${id}`, { method: 'DELETE' });
+        const response = await fetch(`${API_URL}/items/${id}`, { method: 'DELETE' });
+        if (!response.ok) {
+          throw new Error('Failed to delete item');
+        }
         fetchItems();
       } catch (error) {
         console.error('Error deleting item:', error);
+        alert('Failed to delete item. Please try again.');
       }
     }
   };

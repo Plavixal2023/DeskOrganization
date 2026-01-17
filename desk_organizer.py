@@ -6,7 +6,6 @@ This script scans a specified directory (default: Desktop) and organizes files i
 folders based on their file extensions.
 """
 
-import os
 import shutil
 import argparse
 from pathlib import Path
@@ -123,11 +122,7 @@ def organize_desktop(desktop_path, dry_run=False):
         destination = category_folder / item.name
         
         # Handle file name conflicts (check even in dry-run to show accurate preview)
-        if dry_run and category_folder.exists():
-            # In dry-run, only check for conflicts if category folder already exists
-            destination = resolve_file_conflict(destination, item)
-        elif not dry_run:
-            # In actual execution, always check and resolve conflicts
+        if not dry_run or category_folder.exists():
             destination = resolve_file_conflict(destination, item)
         
         # Move the file
@@ -184,11 +179,11 @@ Examples:
     )
     
     # Default desktop path
-    default_desktop = str(Path.home() / 'Desktop')
+    default_desktop = Path.home() / 'Desktop'
     
     parser.add_argument(
         '--path',
-        default=default_desktop,
+        default=str(default_desktop),
         help=f'Path to the directory to organize (default: {default_desktop})'
     )
     

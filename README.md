@@ -24,6 +24,17 @@ cd DeskOrganization
 chmod +x desk_organizer.py
 ```
 
+### Desktop Shortcut
+
+Want a desktop shortcut to easily run the organizer? 
+
+📁 **See [SHORTCUT_SETUP.md](SHORTCUT_SETUP.md)** for instructions on creating a desktop launcher for:
+- **Linux** - `.desktop` file and shell launcher
+- **Windows** - Batch file launcher  
+- **macOS** - Shell launcher and Automator app
+
+The repository includes `DesktopOrganizer.desktop`, `DesktopOrganizer.bat`, `DesktopOrganizer.sh`, and an icon file (`icon.svg`) that you can download and use.
+
 ## Usage
 
 ### Basic Usage

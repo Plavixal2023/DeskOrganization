@@ -95,15 +95,31 @@ def organize_desktop(desktop_path, dry_run=False):
         # Destination path
         destination = category_folder / item.name
         
-        # Handle file name conflicts
-        if not dry_run and destination.exists():
-            base_name = item.stem
-            extension = item.suffix
-            counter = 1
-            while destination.exists():
-                new_name = f"{base_name}_{counter}{extension}"
-                destination = category_folder / new_name
-                counter += 1
+        # Handle file name conflicts (check even in dry-run to show accurate preview)
+        if dry_run:
+            # In dry-run, check if destination would exist (category folders may not exist yet)
+            # Check actual filesystem for existing files
+            if category_folder.exists():
+                temp_dest = destination
+                if temp_dest.exists():
+                    base_name = item.stem
+                    extension = item.suffix
+                    counter = 1
+                    while temp_dest.exists():
+                        new_name = f"{base_name}_{counter}{extension}"
+                        temp_dest = category_folder / new_name
+                        counter += 1
+                    destination = temp_dest
+        else:
+            # In actual execution, check and resolve conflicts
+            if destination.exists():
+                base_name = item.stem
+                extension = item.suffix
+                counter = 1
+                while destination.exists():
+                    new_name = f"{base_name}_{counter}{extension}"
+                    destination = category_folder / new_name
+                    counter += 1
         
         # Move the file
         try:

@@ -1,0 +1,18 @@
+{
+  "name": "desk-organization-backend",
+  "version": "1.0.0",
+  "description": "Backend API for Desk Organization application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["desk", "organization", "api"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "better-sqlite3": "^9.2.2"
+  }
+}

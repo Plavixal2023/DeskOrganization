@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Desktop Organizer
+Comment=Automatically organize files on your desktop
+Exec=python3 %d/desk_organizer.py
+Icon=%d/icon.svg
+Terminal=true
+Categories=Utility;FileTools;
+Keywords=organize;files;desktop;cleanup;

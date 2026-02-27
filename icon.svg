@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="95" fill="#4A90E2" stroke="#2E5C8A" stroke-width="3"/>
+  
+  <!-- Folder icon -->
+  <g transform="translate(40, 60)">
+    <!-- Main folder body -->
+    <rect x="0" y="15" width="120" height="80" rx="5" fill="#FFD700" stroke="#CC9900" stroke-width="2"/>
+    <!-- Folder tab -->
+    <path d="M 0 15 L 0 10 Q 0 5 5 5 L 40 5 L 50 15 Z" fill="#FFD700" stroke="#CC9900" stroke-width="2"/>
+  </g>
+  
+  <!-- File icons organized inside folder -->
+  <g transform="translate(55, 90)">
+    <!-- Small document 1 -->
+    <rect x="5" y="0" width="20" height="25" rx="2" fill="#FFFFFF" stroke="#2E5C8A" stroke-width="1.5"/>
+    <line x1="8" y1="6" x2="22" y2="6" stroke="#2E5C8A" stroke-width="1"/>
+    <line x1="8" y1="11" x2="22" y2="11" stroke="#2E5C8A" stroke-width="1"/>
+    <line x1="8" y1="16" x2="18" y2="16" stroke="#2E5C8A" stroke-width="1"/>
+    
+    <!-- Small document 2 -->
+    <rect x="30" y="0" width="20" height="25" rx="2" fill="#FFFFFF" stroke="#2E5C8A" stroke-width="1.5"/>
+    <line x1="33" y1="6" x2="47" y2="6" stroke="#2E5C8A" stroke-width="1"/>
+    <line x1="33" y1="11" x2="47" y2="11" stroke="#2E5C8A" stroke-width="1"/>
+    <line x1="33" y1="16" x2="43" y2="16" stroke="#2E5C8A" stroke-width="1"/>
+    
+    <!-- Small document 3 -->
+    <rect x="55" y="0" width="20" height="25" rx="2" fill="#FFFFFF" stroke="#2E5C8A" stroke-width="1.5"/>
+    <line x1="58" y1="6" x2="72" y2="6" stroke="#2E5C8A" stroke-width="1"/>
+    <line x1="58" y1="11" x2="72" y2="11" stroke="#2E5C8A" stroke-width="1"/>
+    <line x1="58" y1="16" x2="68" y2="16" stroke="#2E5C8A" stroke-width="1"/>
+  </g>
+  
+  <!-- Sparkle effect indicating organization -->
+  <g fill="#FFFFFF" opacity="0.8">
+    <circle cx="160" cy="50" r="3"/>
+    <circle cx="170" cy="60" r="2"/>
+    <circle cx="150" cy="55" r="2.5"/>
+    <circle cx="165" cy="70" r="2"/>
+  </g>
+</svg>
